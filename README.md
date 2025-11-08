@@ -67,8 +67,12 @@ A fun, interactive Docker-hosted web application that helps children practice ma
 2. **Configure environment variables (optional)**
    ```bash
    cp .env.example .env
-   # Edit .env if you want to use Ollama/Whisper/TTS services
+   # Edit .env to customize ports or use Ollama/Whisper/TTS services
    ```
+
+   **Port Configuration:**
+   - `BACKEND_PORT` - Backend API port (default: 3000)
+   - `FRONTEND_PORT` - Frontend web port (default: 5173)
 
 3. **Build and start the application**
    ```bash
@@ -242,15 +246,16 @@ Database file: `./data/mathtutor.db`
 ## Troubleshooting
 
 ### Port Already in Use
-If ports 3000 or 5173 are already in use, modify `docker-compose.yml`:
-```yaml
-services:
-  backend:
-    ports:
-      - "3001:3000"  # Change first port
-  frontend:
-    ports:
-      - "5174:80"    # Change first port
+If ports 3000 or 5173 are already in use, modify the `.env` file:
+```env
+BACKEND_PORT=3001
+FRONTEND_PORT=5174
+```
+
+Then restart the containers:
+```bash
+docker-compose down
+docker-compose up -d
 ```
 
 ### Database Issues

@@ -5,7 +5,7 @@ services:
     build: ./backend
     container_name: mathtutor-backend
     ports:
-      - "3000:3000"
+      - "${BACKEND_PORT:-3000}:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_PATH=/app/data/mathtutor.db
@@ -21,7 +21,7 @@ services:
     build: ./frontend
     container_name: mathtutor-frontend
     ports:
-      - "5173:80"
+      - "${FRONTEND_PORT:-5173}:80"
     depends_on:
       - backend
     restart: unless-stopped
