@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: mathtutor-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_PATH=/app/data/mathtutor.db
+      - OLLAMA_URL=${OLLAMA_URL:-}
+      - WHISPER_URL=${WHISPER_URL:-}
+      - TTS_URL=${TTS_URL:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: mathtutor-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  data:
